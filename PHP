@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BASIC TO DO LIST</title>
+</head>
+<body>
+<h1>To-Do List</h1> 
+    <form method="post" class="task-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        Task Name: <input type="text" name="task_name" required>
+        <input type="submit" name="add_task" value="Add Task">
+    </form>
+
+    <?php
+    $file = 'tasks.txt';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['add_task'])) {
+            $task_name = htmlspecialchars($_POST['task_name']);
+            $task = $task_name . "\n";
+            file_put_contents($file, $task, FILE_APPEND);
+        } elseif (isset($_POST['delete_task'])) {
+            $delete_task = htmlspecialchars($_POST['delete_task']);
+            $tasks = file($file, FILE_IGNORE_NEW_LINES);
+            $tasks = array_filter($tasks, function($task) use ($delete_task) {
+                return trim($task) != $delete_task;
+            });
+            file_put_contents($file, implode("\n", $tasks) . "\n");
+        }
+    }
+</body>
+</html>
