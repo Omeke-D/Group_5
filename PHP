@@ -1,65 +1,12 @@
-<?php
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>To-Do List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .task {
-            margin-bottom: 10px;
-        }
-        .completed {
-            text-decoration: line-through;
-        }
-        .task-form, .delete-form {
-            display: inline;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <h1>To-Do List</h1>
-    <form method="post" class="task-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        Task Name: <input type="text" name="task_name" required>
-        <input type="submit" name="add_task" value="Add Task">
-    </form>
-
-    <?php
-    $file = 'tasks.txt';
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST['add_task'])) {
-            $task_name = htmlspecialchars($_POST['task_name']);
-            $task = $task_name . "\n";
-            file_put_contents($file, $task, FILE_APPEND);
-        } elseif (isset($_POST['delete_task'])) {
-            $delete_task = htmlspecialchars($_POST['delete_task']);
-            $tasks = file($file, FILE_IGNORE_NEW_LINES);
-            $tasks = array_filter($tasks, function($task) use ($delete_task) {
-                return trim($task) != $delete_task;
-            });
-            file_put_contents($file, implode("\n", $tasks) . "\n");
-        }
-    }
-
-    if (file_exists($file)) {
-        $tasks = file($file, FILE_IGNORE_NEW_LINES);
-        echo "<h2>Tasks:</h2>";
-        foreach ($tasks as $task) {
-            echo '<div class="task">';
-            echo htmlspecialchars($task);
-            echo ' <form method="post" class="delete-form" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
-            echo '<input type="hidden" name="delete_task" value="' . htmlspecialchars($task) . '">';
-            echo '<input type="submit" value="Mark as Completed">';
-            echo '</form>';
-            echo '</div>';
-        }
-    } else {
-        echo "<h2>No tasks found.</h2>";
-    }
-    ?>
+    <form action="" method= "post"></form>
+    <input type="text" name="todo_name">
 </body>
 </html>
-?>
