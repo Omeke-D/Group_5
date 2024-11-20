@@ -9,11 +9,13 @@
     <div class="container">
         <h1>PHP To-Do List</h1>
 
+        <!-- Add Task Form -->
         <form action="todo.php" method="POST">
             <input type="text" name="task" placeholder="Enter a new task..." required>
             <button type="submit" name="add_task">Add Task</button>
         </form>
 
+        <!-- Display Tasks -->
         <ul>
             <?php if (!empty($tasks)): ?>
                 <?php foreach ($tasks as $task): ?>
