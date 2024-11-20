@@ -4,3 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP To-Do List</title>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP To-Do List</h1>
+
+        <form action="todo.php" method="POST">
+            <input type="text" name="task" placeholder="Enter a new task..." required>
+            <button type="submit" name="add_task">Add Task</button>
+        </form>
+
+        <ul>
+            <?php if (!empty($tasks)): ?>
+                <?php foreach ($tasks as $task): ?>
+                    <li>
+                        <span><?php echo htmlspecialchars($task); ?></span>
+                        <form action="todo.php" method="POST" style="margin: 0;">
+                            <button type="submit" name="remove_task" value="<?php echo htmlspecialchars($task); ?>" class="remove-button">Complete</button>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li>No tasks available. Add one above!</li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</body>
+</html>
